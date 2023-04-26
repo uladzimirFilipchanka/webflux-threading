@@ -6,6 +6,8 @@ import reactor.core.publisher.Flux;
 import reactor.core.scheduler.Schedulers;
 
 import java.time.Duration;
+import java.util.Random;
+import java.util.stream.Stream;
 
 @RestController
 public class KarmaController {
@@ -37,6 +39,10 @@ public class KarmaController {
     }
 
     private Flux<Integer> prepareKarma() {
-        return Flux.range(1, 5);
+        Random random = new Random();
+
+        return Flux.fromStream(
+                Stream.generate(() -> random.nextInt(10))
+                        .limit(5));
     }
 }
